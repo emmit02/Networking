@@ -22,7 +22,6 @@ class Server
 
             startReading();
             startWriting();
-
         } 
         catch (Exception e) {
             e.printStackTrace();
