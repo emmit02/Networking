@@ -4,6 +4,9 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -30,16 +33,15 @@ public class Client extends JFrame
     public Client()
     {
         try {
-            //System.out.println("Sending request to a server");
-            //socket=new Socket("127.0.0.1",7777);
-            //System.out.println("Connection done..");
+            System.out.println("Sending request to a server");
+            socket=new Socket("127.0.0.1",7777);
+            System.out.println("Connection done..");
 
-            //br=new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-            //out=new PrintWriter(socket.getOutputStream());
+            br=new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            out=new PrintWriter(socket.getOutputStream());
             createGUI();
             handleEvents();
-            //startReading();
+            startReading();
             //startWriting();
         } catch (Exception e) {
             // TODO: handle exception
@@ -64,8 +66,18 @@ public class Client extends JFrame
 
             @Override
             public void keyReleased(KeyEvent e) {
-                // TODO Auto-generated method stub
-                System.out.println("Key Released "+e.getKeyCode());
+                // TO  DO Auto-generated method stub
+                //System.out.println("Key Released "+e.getKeyCode());
+                if(e.getKeyCode()==10)
+                {
+                    //System.out.println("You have pressed enter button");
+                    String contentToSend =messageInput.getText();
+                    messageArea.append("Me :"+contentToSend+"\n");
+                    out.println(contentToSend);
+                    out.flush();
+                    messageInput.setText(contentToSend);
+                    messageInput.requestFocus();
+                }
             }
             
         });
@@ -89,13 +101,15 @@ public class Client extends JFrame
         heading.setVerticalTextPosition(SwingConstants.BOTTOM);
         heading.setHorizontalAlignment(SwingConstants.CENTER);
         heading.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
+        messageArea.setEditable(false);
         messageInput.setHorizontalAlignment(SwingConstants.CENTER);
         //frames layout
         this.setLayout(new BorderLayout());
         
         //adding the component to frame
         this.add(heading,BorderLayout.NORTH);
-        this.add(messageArea, BorderLayout.CENTER);
+        JScrollPane jScrollPane=new JScrollPane(messageArea);
+        this.add(jScrollPane, BorderLayout.CENTER);
         this.add(messageInput, BorderLayout.SOUTH);
         this.setVisible(true);
     }
@@ -115,12 +129,14 @@ public class Client extends JFrame
                     if (msg.equals("exit"))
                     {
                         System.out.println("Server terminated the chat");
+                        JOptionPane.showMessageDialog(this, "Server Terminated the chat");
+                        messageInput.setEnabled(false);
                         socket.close();
                         break;    
                     }
     
-                    System.out.println("Server : " +msg);
-                
+                    //System.out.println("Server : " +msg);
+                    messageArea.append("Server : " +msg+"\n");
                 }
             }catch(Exception e)
             {
