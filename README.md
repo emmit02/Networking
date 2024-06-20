@@ -48,3 +48,7 @@ Contributions are welcome! If you have ideas for improvements or new features, f
 
 📝 Acknowledgments
 Inspired by the need to understand the fundamental client-server model in networking, this project serves as a starting point for those new to network programming in Java.
+
+
+![Explicit work](<Screenshot (121).png>)
+![GUI](<Screenshot (126).png>)
