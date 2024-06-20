@@ -21,23 +21,23 @@ Clone the repository:
 
 bash
 Copy code
-git clone https://github.com/yourusername/java-networking-client-server.git
+https://github.com/emmit02/Networking.git
 cd java-networking-client-server
 Compile the source code:
 
 bash
 Copy code
-javac src/*.java
+javac /*.java
 Run the server:
 
 bash
 Copy code
-java src/Server
+java /Server
 Run the client:
 
 bash
 Copy code
-java src/Client
+java /Client
 
 🛠️ Usage
 Server: The server will start and listen on a specified port for client connections. It will handle incoming client requests and send appropriate responses.
